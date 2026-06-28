@@ -1,9 +1,6 @@
 import { lazy } from 'react'
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import type { ReactNode } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
-import { useAuth } from './context/AuthContext'
-import Login from './pages/Login'
 
 // Páginas carregadas sob demanda (code-splitting por rota)
 const Dashboard = lazy(() => import('./pages/Dashboard'))
@@ -34,25 +31,10 @@ const Logs = lazy(() => import('./pages/admin/Logs'))
 const Configuracoes = lazy(() => import('./pages/Configuracoes'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
-function RequireAuth({ children }: { children: ReactNode }) {
-  const { user } = useAuth()
-  const location = useLocation()
-  if (!user) return <Navigate to="/login" replace state={{ from: location }} />
-  return <>{children}</>
-}
-
 export default function App() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-
-      <Route
-        element={
-          <RequireAuth>
-            <Layout />
-          </RequireAuth>
-        }
-      >
+      <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
 
         {/* Transações */}

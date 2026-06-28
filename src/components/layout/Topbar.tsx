@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom'
-import { Menu, Bell, LogOut, Settings as SettingsIcon, ChevronDown } from 'lucide-react'
+import { Menu, Bell, Settings as SettingsIcon, ChevronDown } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { Avatar } from '../ui/Avatar'
 import { Dropdown } from '../ui/Dropdown'
 
 export function Topbar({ onOpenMobile }: { onOpenMobile: () => void }) {
-  const { user, logout } = useAuth()
+  const { user } = useAuth()
   const navigate = useNavigate()
 
   return (
@@ -37,12 +37,10 @@ export function Topbar({ onOpenMobile }: { onOpenMobile: () => void }) {
           align="right"
           trigger={
             <button className="flex items-center gap-2.5 rounded-xl border border-border bg-card py-1.5 pl-1.5 pr-3 transition-colors hover:bg-card-muted">
-              <Avatar name={user?.name ?? 'Admin'} size="sm" />
+              <Avatar name={user.name} size="sm" />
               <span className="hidden text-left sm:block">
-                <span className="block text-sm font-semibold leading-tight text-foreground">
-                  {user?.name ?? 'Admin'}
-                </span>
-                <span className="block text-[11px] leading-tight text-muted">{user?.role ?? '—'}</span>
+                <span className="block text-sm font-semibold leading-tight text-foreground">{user.name}</span>
+                <span className="block text-[11px] leading-tight text-muted">{user.role}</span>
               </span>
               <ChevronDown className="h-4 w-4 text-muted" />
             </button>
@@ -52,15 +50,6 @@ export function Topbar({ onOpenMobile }: { onOpenMobile: () => void }) {
               label: 'Configurações',
               icon: <SettingsIcon className="h-4 w-4" />,
               onClick: () => navigate('/configuracoes'),
-            },
-            {
-              label: 'Sair',
-              icon: <LogOut className="h-4 w-4" />,
-              tone: 'danger',
-              onClick: () => {
-                logout()
-                navigate('/login')
-              },
             },
           ]}
         />
