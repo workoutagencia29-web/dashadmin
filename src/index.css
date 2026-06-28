@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ---- Light theme ---- */
+    --background: 244 246 249; /* #F4F6F9 */
+    --sidebar: 255 255 255; /* #FFFFFF */
+    --card: 255 255 255; /* #FFFFFF */
+    --card-muted: 247 249 251; /* #F7F9FB */
+    --border: 228 232 238; /* #E4E8EE */
+    --input: 241 244 248; /* #F1F4F8 */
+    --foreground: 17 24 39; /* #111827 */
+    --muted: 107 119 140; /* #6B778C */
+    --faint: 156 167 185; /* #9CA7B9 */
+    --primary: 47 107 255; /* #2F6BFF royal blue */
+    --primary-foreground: 255 255 255;
+    --positive: 16 185 129; /* #10B981 emerald */
+    --negative: 220 38 38; /* #DC2626 */
+    --success: 16 185 129; /* #10B981 */
+    --warning: 217 119 6; /* #D97706 amber-600 */
+    --danger: 220 38 38; /* #DC2626 */
+    --info: 47 107 255; /* #2F6BFF */
+  }
+
+  .dark {
+    /* ---- Dark theme — paleta da marca (esquema "Mais azulado") ---- */
+    --background: 12 23 48; /* #0C1730 — fundo do painel */
+    --sidebar: 9 16 32; /* #091020 — navy bem escuro */
+    --card: 13 27 57; /* #0D1B39 — cards (tom do hero glow) */
+    --card-muted: 22 40 80; /* #162850 — hover/insets */
+    --border: 34 52 90; /* #22345A — linhas/contornos */
+    --input: 22 40 80; /* #162850 */
+    --foreground: 246 249 252; /* #F6F9FC */
+    --muted: 142 154 177; /* #8E9AB1 */
+    --faint: 104 117 142; /* #68758E */
+    --primary: 47 107 255; /* #2F6BFF vivid blue */
+    --primary-foreground: 255 255 255;
+    --positive: 52 211 153; /* #34D399 emerald-400 */
+    --negative: 248 113 113; /* #F87171 */
+    --success: 52 211 153; /* #34D399 */
+    --warning: 251 191 36; /* #FBBF24 amber-400 */
+    --danger: 248 113 113; /* #F87171 */
+    --info: 96 165 250; /* #60A5FA */
+  }
+
+  * {
+    border-color: rgb(var(--border));
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer components {
+  /* Theme-aware Recharts styling */
+  .chart-themed .recharts-cartesian-grid line {
+    stroke: rgb(var(--border));
+  }
+  .chart-themed .recharts-text,
+  .chart-themed .recharts-cartesian-axis-tick-value {
+    fill: rgb(var(--faint));
+  }
+  .chart-themed .recharts-surface:focus,
+  .chart-themed .recharts-wrapper:focus {
+    outline: none;
+  }
+
+  /* react-day-picker — tema azul/dark (filtro "Período personalizado") */
+  .rdp-root {
+    --rdp-accent-color: rgb(var(--primary));
+    --rdp-accent-background-color: rgb(var(--primary) / 0.15);
+    --rdp-today-color: rgb(var(--primary));
+    --rdp-day-width: 36px;
+    --rdp-day-height: 36px;
+    --rdp-day_button-width: 34px;
+    --rdp-day_button-height: 34px;
+    --rdp-day_button-border-radius: 9px;
+    --rdp-selected-border: none;
+    --rdp-range_start-color: #fff;
+    --rdp-range_end-color: #fff;
+    --rdp-range_middle-background-color: rgb(var(--primary) / 0.14);
+    --rdp-range_middle-color: rgb(var(--foreground));
+    --rdp-disabled-opacity: 0.3;
+    --rdp-nav_button-height: 30px;
+    --rdp-nav_button-width: 30px;
+    margin: 0;
+    font-size: 13px;
+    color: rgb(var(--foreground));
+  }
+  .rdp-month_caption {
+    font-weight: 600;
+    color: rgb(var(--foreground));
+    text-transform: capitalize;
+  }
+  .rdp-weekday {
+    color: rgb(var(--faint));
+    font-weight: 500;
+    font-size: 11px;
+  }
+  .rdp-day_button {
+    color: rgb(var(--foreground));
+  }
+  .rdp-day_button:hover {
+    background-color: rgb(var(--card-muted));
+  }
+  .rdp-chevron {
+    fill: rgb(var(--muted));
+  }
+  .rdp-button_previous:hover .rdp-chevron,
+  .rdp-button_next:hover .rdp-chevron {
+    fill: rgb(var(--foreground));
+  }
+  .rdp-today:not(.rdp-selected) .rdp-day_button {
+    color: rgb(var(--primary));
+    font-weight: 700;
+  }
+  .rdp-outside {
+    opacity: 0.45;
+  }
+}
+
+@layer utilities {
+  /* Thin, themed scrollbars */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--border)) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--border));
+    border-radius: 9999px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Fade na troca de página (rota) — evita a "troca seca" */
+@keyframes page-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.page-fade {
+  animation: page-fade 0.35s ease-out;
+}
+
+/* Acessibilidade: reduz animações/transições para quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
