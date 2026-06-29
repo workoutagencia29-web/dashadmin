@@ -4,6 +4,7 @@ import { ChevronDown, ChevronsLeft, Settings, Sun, Moon } from 'lucide-react'
 import { navItems, type NavItem } from '../../data/nav'
 import { cn } from '../../lib/utils'
 import { useTheme } from '../../context/ThemeContext'
+import { Logo } from './Logo'
 
 interface SidebarProps {
   collapsed: boolean
@@ -163,28 +164,23 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
         )}
       >
         {/* Brand */}
-        <div className={cn('flex h-[76px] items-center gap-3 px-5', collapsed && 'justify-center px-0')}>
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-lg font-extrabold text-primary-foreground shadow-glow">
-            N
-          </div>
-          {!collapsed && (
-            <div className="flex-1">
-              <span className="block text-[19px] font-bold leading-none tracking-tight text-foreground">
-                Nummo
-              </span>
-              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+        <div className={cn('flex h-[76px] items-center gap-2.5 px-5', collapsed && 'justify-center px-0')}>
+          {collapsed ? (
+            <Logo variant="mark" className="h-7 w-auto text-foreground" />
+          ) : (
+            <>
+              <Logo className="h-[22px] w-auto shrink-0 text-foreground" />
+              <span className="rounded-md bg-primary/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
                 Admin
               </span>
-            </div>
-          )}
-          {!collapsed && (
-            <button
-              onClick={onToggleCollapse}
-              className="hidden rounded-lg p-1.5 text-muted transition-colors hover:bg-card-muted hover:text-foreground lg:block"
-              aria-label="Recolher menu"
-            >
-              <ChevronsLeft className="h-5 w-5" />
-            </button>
+              <button
+                onClick={onToggleCollapse}
+                className="ml-auto hidden rounded-lg p-1.5 text-muted transition-colors hover:bg-card-muted hover:text-foreground lg:block"
+                aria-label="Recolher menu"
+              >
+                <ChevronsLeft className="h-5 w-5" />
+              </button>
+            </>
           )}
         </div>
 
